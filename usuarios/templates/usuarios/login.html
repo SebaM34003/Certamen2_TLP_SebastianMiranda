@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Iniciar Sesión - Smart Events{% endblock %}
+
+{% block contenido %}
+<div class="row justify-content-center">
+    <div class="col-md-5">
+        <div class="tarjeta animacion-entrada">
+            <div class="card-header bg-info text-white text-center py-4">
+                <i class="fas fa-sign-in-alt fa-3x mb-3"></i>
+                <h3 class="fw-bold mb-0">Iniciar Sesión</h3>
+            </div>
+            
+            <div class="card-body p-4">
+                <form method="post">
+                    {% csrf_token %}
+                    
+                    <div class="mb-3">
+                        <label for="id_username" class="form-label fw-bold">
+                            <i class="fas fa-user me-2"></i>Usuario
+                        </label>
+                        <input type="text" name="username" class="form-control form-control-lg" id="id_username" 
+                               required placeholder="Tu nombre de usuario">
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="id_password" class="form-label fw-bold">
+                            <i class="fas fa-key me-2"></i>Contraseña
+                        </label>
+                        <input type="password" name="password" class="form-control form-control-lg" id="id_password" 
+                               required placeholder="Tu contraseña">
+                    </div>
+
+                    {% if form.errors %}
+                    <div class="alert alert-danger d-flex align-items-center">
+                        <i class="fas fa-exclamation-triangle me-2"></i>
+                        <div>Usuario o contraseña incorrectos. Inténtalo de nuevo.</div>
+                    </div>
+                    {% endif %}
+
+                    <button type="submit" class="btn btn-primario w-100 py-3 fw-bold">
+                        <i class="fas fa-door-open me-2"></i>Entrar al Sistema
+                    </button>
+                </form>
+
+                <div class="text-center mt-4">
+                    <p class="text-muted">¿No tienes cuenta? 
+                        <a href="{% url 'registro' %}" class="text-decoration-none fw-bold">
+                            Regístrate Aquí
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

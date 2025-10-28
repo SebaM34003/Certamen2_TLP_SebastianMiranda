@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Mis Inscripciones - Smart Events{% endblock %}
+
+{% block contenido %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="fw-bold" style="color: #2c3e50;">
+        <i class="fas fa-ticket-alt me-2"></i>Mis Inscripciones
+    </h1>
+    <span class="badge bg-primary fs-6">{{ inscripciones|length }} eventos</span>
+</div>
+
+{% if inscripciones %}
+<div class="row">
+    {% for inscripcion in inscripciones %}
+    <div class="col-lg-6 mb-4">
+        <div class="tarjeta animacion-entrada">
+            <div class="card-header d-flex justify-content-between align-items-center bg-light">
+                <h5 class="fw-bold mb-0">{{ inscripcion.evento.titulo }}</h5>
+                <span class="badge bg-success">Inscrito</span>
+            </div>
+            
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p><i class="fas fa-clock me-2 text-primary"></i><strong>Fecha:</strong><br>
+                        {{ inscripcion.evento.fecha_hora|date:"d/m/Y H:i" }}</p>
+                        
+                        <p><i class="fas fa-map-marker-alt me-2 text-danger"></i><strong>Lugar:</strong><br>
+                        {{ inscripcion.evento.lugar }}</p>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <p><i class="fas fa-tag me-2 text-success"></i><strong>Precio:</strong><br>
+                        ${{ inscripcion.evento.precio }}</p>
+                        
+                        <p><i class="fas fa-calendar-check me-2 text-info"></i><strong>Inscrito el:</strong><br>
+                        {{ inscripcion.fecha_inscripcion|date:"d/m/Y H:i" }}</p>
+                    </div>
+                </div>
+                
+                <div class="mt-4 text-center">
+                    <a href="{% url 'cancelar_inscripcion' inscripcion.id %}" 
+                       class="btn btn-outline-danger btn-sm"
+                       onclick="return confirm('¿Estás seguro de que deseas cancelar tu inscripción en {{ inscripcion.evento.titulo }}?')">
+                        <i class="fas fa-times-circle me-2"></i>Cancelar Inscripción
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="row">
+    <div class="col-12">
+        <div class="tarjeta text-center p-5 animacion-entrada">
+            <i class="fas fa-calendar-times fa-4x text-muted mb-4"></i>
+            <h3 class="text-muted mb-3">No tienes inscripciones activas</h3>
+            <p class="text-muted mb-4">¡Aún no te has inscrito en ningún evento! Explora nuestra oferta de actividades.</p>
+            <a href="{% url 'lista_eventos' %}" class="btn btn-primario btn-lg">
+                <i class="fas fa-search me-2"></i>Explorar Eventos Disponibles
+            </a>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
